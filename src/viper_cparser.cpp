@@ -1410,7 +1410,8 @@ class CParser
         const ValueType dst_type = m_fn->vars[dst].type;
         if (src >= 0 && src < (int)m_fn->vars.size() &&
             m_fn->vars[src].is_temp && !m_fn->vars[src].is_const &&
-            can_merge_temp_move_type(src_type, dst_type) && !m_fn->code.empty())
+            can_merge_temp_move_type(src_type, dst_type) && !m_fn->code.empty() &&
+            !current_pc_is_branch_target())
         {
             Instruction &prev = m_fn->code.back();
             if (prev.a == src && prev.op != OpCode::Jump && prev.op != OpCode::JumpIfFalse &&
@@ -1423,6 +1424,28 @@ class CParser
             }
         }
         return emit(OpCode::Mov, dst, src, 0, 0, type);
+    }
+
+    /**
+     * @brief Return true when the next IR slot is already a branch target.
+     *
+     * Retargeting a temp write into the final assignment target is only valid
+     * for straight-line code. Short-circuit expressions can create multiple
+     * branches that write the same temp and then join at the final Mov. At that
+     * join point the Mov must stay explicit, otherwise only the last path is
+     * retargeted and earlier paths still write the temp.
+     */
+    bool current_pc_is_branch_target() const
+    {
+        const int pc = (int)m_fn->code.size();
+        for (const Instruction &ins : m_fn->code)
+        {
+            if (ins.op == OpCode::Jump && ins.a == pc)
+                return true;
+            if (ins.op == OpCode::JumpIfFalse && ins.b == pc)
+                return true;
+        }
+        return false;
     }
 
     /**
