@@ -29,7 +29,7 @@ rg -n "std::string|#include <string>|to_string" src ports
 - `ports/nodemcu/viper.cpp`
 - `ports/arduino/lua_viper.cpp`
 
-其中 `ports/arduino/` 可以最后处理，因为 Arduino 当前只是 compile-only 集成实验。真正要先跑通的是 `src/` 和 `ports/nodemcu/`。
+其中 `ports/arduino/` 可以最后处理，因为 Arduino 需要重新编译 Arduino-ESP32 core/底层 ESP-IDF 配置后才能运行 native code。真正要先跑通的是 `src/` 和 `ports/nodemcu/`。
 
 ## 2. 增加固定长度字符串结构
 
@@ -295,4 +295,3 @@ rg -n "std::string|#include <string>|to_string" src ports/nodemcu
 ```
 
 最终目标是 `src/` 和 `ports/nodemcu/` 完全没有 `std::string`。
-

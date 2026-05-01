@@ -4,7 +4,7 @@
 
 Viper is an experimental Lua module that compiles one small C-like function into
 native Xtensa code at runtime. It is intended for hot integer loops on
-ESP32-class chips, especially ESP32-S3 with ESP-IDF or NodeMCU.
+ESP32-class chips, especially ESP32-S3 with ESP-IDF, Arduino, or NodeMCU.
 
 > Status: experimental. The current code has been tested on ESP32-S3 only.
 > Classic ESP32 may work because it is also an Xtensa ESP-IDF target, but it is
@@ -28,9 +28,9 @@ ESP32-class chips, especially ESP32-S3 with ESP-IDF or NodeMCU.
 | --- | --- |
 | ESP32-S3 + ESP-IDF | Tested and usable |
 | ESP32-S3 + NodeMCU ESP32 branch | Tested with external component build |
-| ESP32-S3 + Arduino | Can compile, but normally cannot run native code without required `sdkconfig` changes |
+| ESP32-S3 + Arduino | Usable when the Arduino-ESP32 core is rebuilt with the required ESP-IDF config |
 | ESP32 + ESP-IDF | Likely portable, not verified |
-| ESP32 + Arduino | Can compile, but normally cannot run native code without required `sdkconfig` changes |
+| ESP32 + Arduino | Likely portable when the Arduino-ESP32 core is rebuilt, not verified |
 | ESP8266 | Not supported |
 
 Viper generates code at runtime and allocates executable internal RAM. For
@@ -98,10 +98,10 @@ Lua console on USB Serial/JTAG. See
 
 ## Arduino
 
-The Arduino port is useful for compile-time integration experiments. In many
-Arduino environments you cannot easily change the ESP-IDF `sdkconfig` options
-required by executable RAM. That means the code may compile but generated native
-code is not expected to run correctly. Prefer ESP-IDF or NodeMCU for real use.
+The Arduino port can be used on ESP32-class targets, but normal Arduino package
+installs do not expose the ESP-IDF `sdkconfig` options required by executable
+RAM. Rebuild the Arduino-ESP32 core with the required lower-level ESP-IDF config
+before expecting generated native code to run correctly.
 
 ## C-like Subset
 
