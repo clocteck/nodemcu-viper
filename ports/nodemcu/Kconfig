@@ -1,0 +1,9 @@
+menu "Viper"
+
+config NODEMCU_CMODULE_VIPER
+    bool "Enable Viper Lua module"
+    default y
+    help
+        Build the experimental Viper runtime C-like compiler module.
+
+endmenu

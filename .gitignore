@@ -1,0 +1,15 @@
+.pio/
+.vscode/
+.idea/
+build/
+dist/
+*.o
+*.a
+*.elf
+*.bin
+*.map
+*.pyc
+component.mk
+!firmware/
+!firmware/**
+!firmware/**/*.bin
