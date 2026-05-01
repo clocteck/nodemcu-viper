@@ -7,4 +7,4 @@ module enabled.
 - `fill.lua`: fills a `viper.buf` with byte values.
 - `coremark.lua`: runs a CoreMark-style benchmark with CRC, matrix, state,
   and list kernels. It prints Viper vs Lua checksums, elapsed time, and
-  `speedup_x100` (for example, `1234` means 12.34x).
+  `speedup` as an `Nx` ratio, for example `12.34x`.

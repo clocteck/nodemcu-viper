@@ -663,5 +663,6 @@ else
 end
 
 if viper_us > 0 then
-  print("speedup_x100", math.floor((lua_us * 100) / viper_us))
+  local scaled = math.floor((lua_us * 100) / viper_us)
+  print("speedup", string.format("%d.%02dx", math.floor(scaled / 100), scaled % 100))
 end
